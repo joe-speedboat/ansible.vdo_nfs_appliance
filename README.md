@@ -12,12 +12,19 @@ Requirements
 * CPU: min 4   
 * Memory: min 4GB   
 
-Install Role
---------------
+Install Role from Git
+---------------------
 ```
 git clone git@github.com:joe-speedboat/ansible.vdo_nfs_appliance.git /etc/ansible/roles/joe-speedboat.ansible_vdo_nfs_appliance
 ``` 
-Later on I will put this as well into ansible galaxy. But at the moment it is a PoC
+
+
+Install Role from Galaxy
+------------------------
+```
+ansible-galaxy install joe-speedboat.ansible_vdo_nfs_appliance
+``` 
+
 
 
 Role Variables
