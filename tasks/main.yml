@@ -1,0 +1,122 @@
+---
+# tasks file for joe-speedboat.ansible_vdo_nfs_appliance
+####################################################################################################
+- name: install stream repository needed by kvdo BUG=17928
+  template:
+    src: CentOS-Stream-vdo.repo.j2
+    dest: /etc/yum.repos.d/CentOS-Stream-vdo.repo
+    owner: root
+    group: root
+    mode: 0644
+  tags: packages
+- name: upgrade all packages
+  dnf:
+    name: "*"
+    state: latest
+    update_cache: yes
+  tags: packages
+- name: install base packages
+  dnf:
+    name: 
+    - kmod-kvdo
+    - vdo
+    - firewalld
+    - nfs-utils
+  tags: packages
+- name: start firewall service
+  systemd:
+    name: firewalld
+    enabled: true
+    state: started
+  tags: firewall
+- name: start vdo service
+  systemd:
+    name: vdo
+    enabled: true
+    state: started
+  tags: vdo
+- name: setup vdo storage
+  vdo:
+    name: "{{ vdoDev }}"
+    state: present
+    running: true
+    device: "/dev/{{ vdoPhyDev }}"
+    logicalsize: "{{ vdoLogicalSize }}"
+    compression: "{{ vdoCompression }}"
+    deduplication: "{{ vdoDeduplication }}"
+    growphysical: "{{ vdoGrowphysical }}"
+    writepolicy: "{{ vdoWritepolicy }}"
+    indexmode: "{{ vdoIndexmode }}"
+  tags: vdo
+- name: create filesystem on vdo device
+  filesystem:
+    dev: "/dev/mapper/{{ vdoDev }}"
+    fstype: xfs
+    opts: -K
+  tags: vdo
+- name: Mount vdo device
+  mount:
+    path: "{{ vdoMountDir }}"
+    src: "/dev/mapper/{{ vdoDev }}"
+    fstype: xfs
+    opts: defaults,x-systemd.requires=vdo.service
+    state: mounted
+  tags: vdo
+- name: start nfs service
+  systemd:
+    name: nfs-server
+    enabled: true
+    state: started
+  tags: nfs
+- name: create nfs share dir
+  file:
+    path: "{{ vdoNfsDir }}"
+    state: directory
+    owner: nobody
+    group: nobody
+    mode: 0700
+- name: create nfs read exports
+  copy:
+    dest: "/etc/exports.d/{{vdoDev}}.exports"
+    content: |
+      {{ vdoNfsDir }} {{ nfsWriteIps.split(',') | join(nfsWriteOpts + ' ') }}{{ nfsWriteOpts }} {{ nfsReadIps.split(',') | join(nfsReadOpts + ' ') }}{{ nfsReadOpts }}
+  notify: reload nfs-server
+  tags: nfs
+- name: configure firewall for nfs
+  firewalld:
+    service: nfs
+    permanent: true
+    immediate: true
+    state: enabled
+  tags:
+  - firewall
+  - nfs
+- name: setup cockpit dashboard
+  block:
+  - name: install cockpit software
+    dnf: 
+      name:
+      - cockpit
+      - cockpit-pcp
+      - cockpit-storaged
+      - cockpit-system
+    tags: cockpit
+  - name: enable cockpit
+    systemd:
+      name: cockpit
+      enabled: true
+      state: started
+    tags: cockpit
+  when: installCockpit
+- name: disable cockpit dashboard
+  block:
+  - name: remove cockpit software
+    dnf:
+      name:
+      - cockpit
+      - cockpit-pcp
+      - cockpit-storaged
+      - cockpit-system
+    tags: cockpit
+  when: not installCockpit
+

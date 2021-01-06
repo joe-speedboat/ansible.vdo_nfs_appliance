@@ -1,0 +1,9 @@
+---
+- hosts: vm11
+  remote_user: root
+  vars:
+  - vdoPhyDev: vdb
+  - vdoIndexmode: dense
+  - vdoLogicalSize: 5T
+  roles:
+    - joe-speedboat.ansible_vdo_nfs_appliance

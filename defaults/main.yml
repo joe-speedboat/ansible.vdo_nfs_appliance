@@ -1,0 +1,30 @@
+---
+# defaults file for joe-speedboat.ansible_vdo_nfs_appliance
+####################################################################################################
+# install and start cockpit web service
+installCockpit: True
+
+#### NFS Export Settings ####
+# comma separated nfs write access. eg: 1.1.2.2,host.domain.tld
+nfsWriteIps: 127.0.0.1
+nfsWriteOpts: (rw,sync,no_wdelay,no_root_squash,insecure)
+# comma separated nfs read access. eg: 1.1.2.2,host.domain.tld
+nfsReadIps: 192.168.100.0/24
+nfsReadOpts: (ro)
+
+#### STORAGE SETUP ####
+# physical storage disk. eg: [sv]d[a-z]
+vdoPhyDev: vdz
+vdoDev: "store-{{ vdoPhyDev }}"
+vdoMountDir: "/srv/{{ vdoDev }}"
+vdoNfsDir: "/srv/{{ vdoDev }}/nfs"
+# Logical Storage Size
+vdoLogicalSize: 2T
+
+#### VDO SETTINGS ####
+# https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deduplicating_and_compressing_storage
+vdoIndexmode: sparse
+vdoWritepolicy: sync
+vdoGrowphysical: False
+vdoDeduplication: enabled
+vdoCompression: enabled
