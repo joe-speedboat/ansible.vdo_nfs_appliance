@@ -1,5 +1,5 @@
 ---
-# defaults file for joe-speedboat.ansible_vdo_nfs_appliance
+# defaults file for joe-speedboat.vdo_nfs_appliance
 ####################################################################################################
 # install and start cockpit web service
 installCockpit: True
@@ -9,7 +9,7 @@ installCockpit: True
 nfsWriteIps: 127.0.0.1
 nfsWriteOpts: (rw,sync,no_wdelay,no_root_squash,insecure)
 # comma separated nfs read access. eg: 1.1.2.2,host.domain.tld
-nfsReadIps: 192.168.100.0/24
+nfsReadIps: 127.0.0.2
 nfsReadOpts: (ro)
 
 #### STORAGE SETUP ####

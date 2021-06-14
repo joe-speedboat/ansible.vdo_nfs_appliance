@@ -5,4 +5,4 @@
   - vdoLogicalSize: 5T
   remote_user: root
   roles:
-    - joe-speedboat.ansible_vdo_nfs_appliance
+    - joe-speedboat.vdo_nfs_appliance

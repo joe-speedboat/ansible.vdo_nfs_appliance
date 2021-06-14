@@ -6,4 +6,4 @@
   - vdoIndexmode: dense
   - vdoLogicalSize: 5T
   roles:
-    - joe-speedboat.ansible_vdo_nfs_appliance
+    - joe-speedboat.vdo_nfs_appliance

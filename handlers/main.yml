@@ -1,5 +1,5 @@
 ---
-# handlers file for joe-speedboat.ansible_vdo_nfs_appliance
+# handlers file for joe-speedboat.vdo_nfs_appliance
 ####################################################################################################
 - name: reload nfs-server
   systemd:

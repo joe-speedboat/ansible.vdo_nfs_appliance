@@ -6,7 +6,7 @@ VDO Backup Storage Appliance
 Requirements
 ------------
 
-* Operating System: CentOS8
+* Operating System: Alma Linux 8 or CentOS Stream 8
 * OS Disk: min 10GB
 * Data Disk: min 50GB
 * CPU: min 4   
@@ -15,14 +15,14 @@ Requirements
 Install Role from Git
 ---------------------
 ```
-git clone git@github.com:joe-speedboat/ansible.vdo_nfs_appliance.git /etc/ansible/roles/joe-speedboat.ansible_vdo_nfs_appliance
+git clone git@github.com:joe-speedboat/ansible.vdo_nfs_appliance.git /etc/ansible/roles/joe-speedboat.vdo_nfs_appliance
 ``` 
 
 
 Install Role from Galaxy
 ------------------------
 ```
-ansible-galaxy install joe-speedboat.ansible_vdo_nfs_appliance
+ansible-galaxy install joe-speedboat.vdo_nfs_appliance
 ``` 
 
 

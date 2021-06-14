@@ -1,14 +1,6 @@
 ---
-# tasks file for joe-speedboat.ansible_vdo_nfs_appliance
+# tasks file for joe-speedboat.vdo_nfs_appliance
 ####################################################################################################
-- name: install stream repository needed by kvdo BUG=17928
-  template:
-    src: CentOS-Stream-vdo.repo.j2
-    dest: /etc/yum.repos.d/CentOS-Stream-vdo.repo
-    owner: root
-    group: root
-    mode: 0644
-  tags: packages
 - name: upgrade all packages
   dnf:
     name: "*"
