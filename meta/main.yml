@@ -1,7 +1,8 @@
 galaxy_info:
   author: Chris Ruettimann
-  description: Tux is my favorite penguin
+  description: Ansible NFS VDO Storage Appliance
   company: Bitbull Labs
+  role_name: vdo_nfs_appliance
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -28,16 +29,9 @@ galaxy_info:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
   platforms:
-  - name: CentOS
+  - name: EL
     versions:
     - 8
-  #   - all
-  #   - 25
-  # - name: SomePlatform
-  #   versions:
-  #   - all
-  #   - 1.0
-  #   - 99.99
 
   galaxy_tags: []
     # List tags for your role here, one per line. A tag is a keyword that describes
